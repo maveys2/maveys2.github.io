@@ -11,7 +11,7 @@ Frame() has many variables. First create an instance of the object, var frame1 =
 Edit the values of frame1 such as frame1.bg = "./assets/backgrounds/bg (102).png"
 
 ## Frame() member variables
-  is_choice: boolean, represents if this frame should be a choice for the user (true) or just a normal reading scene (false)
+  **is_choice:** boolean, represents if this frame should be a choice for the user (true) or just a normal reading scene (false)
   
   **bg:** String, url of an image to load as the background, no need to reload background on multiple frames, leave empty
   
