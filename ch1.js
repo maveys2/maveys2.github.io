@@ -3,12 +3,14 @@ $(document).ready(function() {
     var chapter_one = [];
     var click_disabled = false;
     var quit_typed_text = false;
-    var is_paused = false;
-    var i = 0;
-    /* Frame object */
+
+    /* Frame object - need to seperate scene frame and choice frame into different objects */
     function Frame() {
-        is_choice = false;
         bg = null;
+        is_choice = false;
+        choice_one = null;
+        choice_two = null;
+        choice_three = null;
         left_idol = null;
         middle_idol = null;
         right_idol = null;
@@ -26,6 +28,7 @@ $(document).ready(function() {
         $("#right").empty();
         $("#speaker").empty();
         $("#dialog > img").remove();
+        $("#speaker_text").empty();
         $(".text").empty();
         quit_typed_text = false;
         click_disabled = false;
@@ -70,24 +73,60 @@ $(document).ready(function() {
             }
             $("#speaker").append('<img src="./assets/sprites/name.png"/>');
             $("#dialog").append('<img id="textarea" src="./assets/sprites/dialog.png"/>');
+            $("#textarea").click(function() {
+                if (click_disabled == true) return;
+                quit_typed_text = true;
+                next_frame();
+            });
 
-            var speaker_div = document.getElementById('speaker_text');
-            speaker_div.innerHTML = frame.speaker_name
-            click_disabled = true;
-            is_paused = true;
-
-            if (frame.is_choice == true) {
-
+            /* CHOICE OPTIONS */
+            if (frame.is_choice) {
+                click_disabled = true;
+                $(".text").hover(function(){
+                    $(this).css("background-color", "gray");
+                    }, function(){
+                    $(this).css("background-color", "transparent");
+                });
+                $(".text").css({
+                    "cursor": "pointer"
+                })
+                $("#textarea").css({"cursor": "default"});
+                if (frame.choice_one != null) {
+                    document.getElementById('text_one').innerHTML = frame.choice_one;
+                    $("#text_one").click(function() {
+                        click_disabled = false;
+                        next_frame();
+                    });
+                }
+                if (frame.choice_two != null) {
+                    document.getElementById('text_two').innerHTML = frame.choice_two;
+                    $("#text_two").click(function() {
+                        click_disabled = false;
+                        next_frame();
+                    });
+                }
+                if (frame.choice_three != null) {
+                    document.getElementById('text_three').innerHTML = frame.choice_three;
+                    $("#text_three").click(function() {
+                        click_disabled = false;
+                        next_frame();
+                    });
+                }
             } else {
-                typed_text("#text_one", frame.text_one, 0, 25).then(function() {
+                var speaker_div = document.getElementById('speaker_text');
+                speaker_div.innerHTML = frame.speaker_name
+                click_disabled = true;
+
+
+                typed_text("#text_one", frame.text_one, 0, 20).then(function() {
                     if (frame.text_two == null) return;
-                    return typed_text("#text_two", frame.text_two, 0, 25);
+                    return typed_text("#text_two", frame.text_two, 0, 20);
                 }).then(function() {
                     if (frame.text_three == null) return;
-                    return typed_text("#text_three", frame.text_three, 0, 25);
+                    quit_typed_text = false;
+                    return typed_text("#text_three", frame.text_three, 0, 20);
                 }).then(function() {
-                    click_disabled = false; // not sure this should be here
-                    // all done here - perhaps this is where click_disabled = false should be?
+                    click_disabled = false;
                 });
             }
         }
@@ -114,7 +153,7 @@ $(document).ready(function() {
 
     function load_choices()
     {
-        document.getElementById('background').removeAttribute('onclick');
+        document.getElementById('textarea').removeAttribute('click')
         $(".user_choice").click(function() {
             clear_all_div();
         })
@@ -129,41 +168,66 @@ $(document).ready(function() {
         Honoka: So you're _____. That's a nice name! Well class is about to start.
     */
     var ch1f1 = new Frame();
-    //ch1f1.is_choice = true;
     ch1f1.bg = "./bg (49).jpg";
-    ch1f1.left_idol = "./honoka (19).png";
+    ch1f1.left_idol = "./nico (1).png";
     ch1f1.middle_idol = "./maki (1).png";
-    ch1f1.right_idol = "./tmp.png";
-    ch1f1.speaker_name = "Honoka";
-    ch1f1.speaker_pos = "left";
-    ch1f1.text_one = "Welcome to Otonokizaka High School! My name's Honoka.";
-    ch1f1.text_two = "Nice to meet you!";
-    ch1f1.text_three = "hello";
+    ch1f1.right_idol = "./nozomi (1).png";
+    ch1f1.speaker_name = "Maki";
+    ch1f1.speaker_pos = "middle";
+    ch1f1.text_one = "Class is starting soon, did you need something?";
     chapter_one.push(ch1f1);
 
     var ch1f2 = new Frame();
-    ch1f2.left_idol = "./honoka (19).png";
-    ch1f2.middle_idol = "./maki (11).png";
-    ch1f2.right_idol = "./tmp.png";
-    ch1f2.speaker_name = "Maki";
-    ch1f2.speaker_pos = "middle";
-    ch1f2.text_one = "I'm Maki, it's nice to meet you.";
+    ch1f2.left_idol = "./nico (1).png";
+    ch1f2.middle_idol = "./maki (10).png";
+    ch1f2.right_idol = "./nozomi (1).png";
+    ch1f2.speaker_name = "Nozomi";
+    ch1f2.speaker_pos = "right";
+    ch1f2.text_one = "Don't worry, Maki may not seem like it, but she's really nervous.";
+    ch1f2.text_two = "She was really excited about talking with you.";
     chapter_one.push(ch1f2);
 
     var ch1f3 = new Frame();
-    ch1f3.left_idol = "./honoka (19).png";
-    ch1f3.middle_idol = "./maki (11).png";
-    ch1f3.right_idol = "./tmp.png";
-    ch1f3.speaker_name = "Hanamaru";
-    ch1f3.speaker_pos = "right";
-    ch1f3.text_one = "I'm Hanamaru, zura! Who would you like to show you around?";
+    ch1f3.left_idol = "./nico (1).png";
+    ch1f3.middle_idol = "./maki (13).png";
+    ch1f3.right_idol = "./nozomi (1).png";
+    ch1f3.speaker_name = "Maki";
+    ch1f3.speaker_pos = "middle";
+    ch1f3.text_one = "Whahh, I am not!";
+    ch1f3.text_two = "Anyways, if you don't need anything I need to head to class.";
     chapter_one.push(ch1f3);
 
-    next_frame();
+    var ch1f4 = new Frame();
+    ch1f4.left_idol = "./nico (1).png";
+    ch1f4.middle_idol = "./maki (13).png";
+    ch1f4.right_idol = "./nozomi (1).png";
+    ch1f4.speaker_pos = "middle"
+    ch1f4.is_choice = true;
+    ch1f4.choice_one = "I was wondering if you wanted to eat lunch together.";
+    ch1f4.choice_two = "Are you busy after school?";
+    ch1f4.choice_three = "Oh nevermind, sorry I wasted your time.";
+    chapter_one.push(ch1f4);
 
-    $("#textarea").click(function() {
-        if (click_disabled == true) return;
-        quit_typed_text = true;
-        next_frame();
-    });
+    var ch1f5 = new Frame();
+    ch1f5.left_idol = "./nico (3).png";
+    ch1f5.middle_idol = "./maki (10).png";
+    ch1f5.right_idol = "./nozomi (1).png";
+    ch1f5.speaker_pos = "middle"
+    ch1f5.speaker_name = "Maki";
+    ch1f5.text_one = "Ehh?! Why... Why are you asking that now?";
+    ch1f5.text_two = "Nico and Nozomi are here!";
+    ch1f5.text_three = "And I have practice anyways after school.";
+    chapter_one.push(ch1f5);
+
+    var ch1f6 = new Frame();
+    ch1f6.left_idol = "./nico (5).png";
+    ch1f6.middle_idol = "./maki (11).png";
+    ch1f6.right_idol = "./nozomi (1).png";
+    ch1f6.speaker_pos = "right"
+    ch1f6.speaker_name = "Nozomi";
+    ch1f6.text_one = "Maki, you work so hard, it's okay to take a break once in a while";
+    ch1f6.text_two = "I don't think Nico minds either.";
+    chapter_one.push(ch1f6);
+
+    next_frame();
 });
