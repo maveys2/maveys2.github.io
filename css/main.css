@@ -1,0 +1,122 @@
+body {height: 100%; width: 100%; overflow-y: hidden; background-color: black}
+
+#background {
+    width: 960px;
+    height: 640px;
+    margin: 0 auto;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border: 2px solid black;
+}
+
+#speaker {
+    width: 250px;
+    margin-left: 90px;
+}
+
+#dialog {
+    position: absolute;
+    bottom: 25px;
+}
+
+#textarea {
+    display: block;
+    width: 90%;
+    margin: auto;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.idol {
+    height: 640px;
+    width: 33%;
+    display: inline-block;
+    position: relative;
+}
+
+.idolimg {
+    width: 716.8px;
+    height: 716.8px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin-top: -100px;
+}
+
+#left_idol {
+    margin-left: -170px;
+}
+
+#middle_idol {
+    margin-left: -180px;
+}
+
+#right_idol {
+    margin-left: -230px;
+}
+
+.text {
+    color: white;
+    font-family: motoyalmaruw3_mono;
+    font-size: 24px;
+    text-shadow: 3px 2px 6px #000000;
+    line-height: 125%;
+    position: absolute;
+}
+
+#text_one {
+    margin-left: 105px;
+    margin-top: 12px;
+}
+
+#text_two {
+    margin-left: 105px;
+    margin-top: 45px;
+}
+
+#text_three {
+    margin-left: 105px;
+    margin-top: 78px;
+}
+
+#speaker_text {
+    color: white;
+    font-family: motoyalmaruw3_mono;
+    font-size: 28px;
+    text-shadow: 3px 2px 6px #000000;
+    position: absolute;
+    margin-left: 150px;
+    margin-top: -42.5px;
+}
+
+#choice {
+    position: absolute;
+    height: 500px;
+    width: 500px;
+    left:50%;
+    top:50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.user_choice {
+    width: 75%;
+    margin: auto;
+    display: block;
+    margin-bottom: 50px;
+    vertical-align: middle;
+}
+
+@media only screen and (max-width: 786px) {
+html {
+    overflow: hidden;
+    zoom: 55%;
+}
+body {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+}
